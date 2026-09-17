@@ -7,14 +7,14 @@
 
 // ---- Database ----
 define('DB_HOST', getenv('SBT_DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('SBT_DB_NAME') ?: 'sbt_portal');
-define('DB_USER', getenv('SBT_DB_USER') ?: 'sbt_user');
-define('DB_PASS', getenv('SBT_DB_PASS') ?: '');
+define('DB_NAME', getenv('SBT_DB_NAME') ?: 'u781322779_sbt');
+define('DB_USER', getenv('SBT_DB_USER') ?: 'u781322779_sbt');
+define('DB_PASS', getenv('SBT_DB_PASS') ?: 'Sbt@12345@');
 define('DB_SOCKET', getenv('SBT_DB_SOCKET') ?: ''); // optional unix socket for local dev
 
 // ---- App ----
 define('APP_NAME', 'SBT Portal');
-define('APP_URL', getenv('SBT_APP_URL') ?: '');
+define('APP_URL', getenv('sbt.durvishjawale.tech') ?: '');
 define('APP_TIMEZONE', 'Asia/Kolkata');
 define('UPLOAD_DIR', __DIR__ . '/../uploads');
 define('MAX_UPLOAD_BYTES', 5 * 1024 * 1024); // 5 MB

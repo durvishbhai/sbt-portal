@@ -1,20 +1,36 @@
 <?php
 /**
  * SBT Portal - Core configuration.
- * Copy this file's values from config.sample.php on your hosting account
- * and fill in real database credentials before deploying.
+ *
+ * Real credentials do NOT belong in this file — it's committed to git.
+ * Instead, either set the SBT_DB_* environment variables on your host
+ * (cPanel: MultiPHP INI Editor / "Setup Node.js App" style env panels, or
+ * an .env loaded by your hosting panel), or create config/config.local.php
+ * (already git-ignored — see .gitignore) with content like:
+ *
+ *   <?php
+ *   putenv('SBT_DB_NAME=your_db_name');
+ *   putenv('SBT_DB_USER=your_db_user');
+ *   putenv('SBT_DB_PASS=your_db_password');
+ *   putenv('SBT_APP_URL=https://your-domain.example');
+ *
+ * That file is loaded automatically below if present.
  */
+
+if (is_file(__DIR__ . '/config.local.php')) {
+    require __DIR__ . '/config.local.php';
+}
 
 // ---- Database ----
 define('DB_HOST', getenv('SBT_DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('SBT_DB_NAME') ?: 'u781322779_sbt');
-define('DB_USER', getenv('SBT_DB_USER') ?: 'u781322779_sbt');
-define('DB_PASS', getenv('SBT_DB_PASS') ?: 'Sbt@12345@');
+define('DB_NAME', getenv('SBT_DB_NAME') ?: 'sbt_portal');
+define('DB_USER', getenv('SBT_DB_USER') ?: 'sbt_user');
+define('DB_PASS', getenv('SBT_DB_PASS') ?: '');
 define('DB_SOCKET', getenv('SBT_DB_SOCKET') ?: ''); // optional unix socket for local dev
 
 // ---- App ----
 define('APP_NAME', 'SBT Portal');
-define('APP_URL', getenv('sbt.durvishjawale.tech') ?: '');
+define('APP_URL', getenv('SBT_APP_URL') ?: '');
 define('APP_TIMEZONE', 'Asia/Kolkata');
 define('UPLOAD_DIR', __DIR__ . '/../uploads');
 define('MAX_UPLOAD_BYTES', 5 * 1024 * 1024); // 5 MB

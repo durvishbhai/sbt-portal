@@ -35,14 +35,24 @@ without any schema changes.
 1. Upload everything in this repo to your hosting account (e.g. `public_html/`).
 2. Create a MySQL database and user in cPanel, and grant that user full privileges on it.
 3. Import `database/schema.sql` via phpMyAdmin (or `mysql` CLI if you have it).
-4. Edit `config/config.php` and fill in your real `DB_HOST`, `DB_NAME`,
-   `DB_USER`, `DB_PASS` (or set the matching `SBT_DB_*` environment variables if
-   your host supports them — the file falls back to those).
-5. Set `APP_DEBUG` to `false` for production (`config/config.php`).
+4. **Never put real credentials in `config/config.php` — it's committed to git.**
+   Copy `config/config.local.example.php` to `config/config.local.php` (already
+   git-ignored — see `.gitignore`) and fill in your real `SBT_DB_NAME`,
+   `SBT_DB_USER`, `SBT_DB_PASS` and `SBT_APP_URL` there. `config.php` loads it
+   automatically if it exists. If your host offers a proper environment-variable
+   panel, set those same `SBT_DB_*` / `SBT_APP_URL` variables there instead and
+   skip `config.local.php` entirely.
+5. Leave `APP_DEBUG` off in production (it defaults to off unless
+   `SBT_APP_DEBUG=1` is set).
 6. Visit `https://yourdomain.com/install.php` once — this creates the first
    Main Team Maker (MTM) administrator account. The wizard refuses to run again
    once any user exists, so delete or leave `install.php` in place either way.
 7. Log in at `/login.php` with the account you just created.
+
+**If you ever commit real credentials by mistake** (even temporarily), treat
+them as compromised: rotate the database password right away. Removing the
+secret from the latest commit does not remove it from git history — anyone
+with read access to the repo can still see it in an older commit.
 
 New members who self-register via `/register.php` land with `status = pending`
 until an MTM / TM / System Administrator activates them from **Admin → Manage

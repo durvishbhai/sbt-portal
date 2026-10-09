@@ -1,0 +1,11 @@
+# Uploaded member documents — never commit real member data
+/uploads/documents/*
+!/uploads/documents/.gitkeep
+
+# Local environment overrides
+.env
+*.local.php
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

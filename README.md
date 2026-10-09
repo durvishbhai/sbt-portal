@@ -26,9 +26,14 @@ without any schema changes.
 
 ## Requirements
 
-- PHP 8.1+ with `pdo_mysql`
+- PHP 7.4+ with `pdo_mysql` (PHP 8.1+ recommended)
 - MySQL 5.7+ or MariaDB 10.4+
 - Any standard Apache/LiteSpeed shared hosting (cPanel) works — no shell access needed
+
+**Important for cPanel/shared hosting:** most hosts default new accounts to
+an older PHP version unless you change it. In cPanel, open **MultiPHP
+Manager** (or **Select PHP Version**) and set your domain to PHP 8.1 or
+newer before importing the schema or visiting the site.
 
 ## Deploying on shared hosting
 
@@ -108,6 +113,29 @@ uploads/         Member-uploaded documents (never committed, see .gitignore)
   not on Apache.
 - An **emergency lockdown** switch (Admin → Settings, MTM/System Administrator
   only) puts the whole portal into read-only mode for everyone except admins.
+
+## Troubleshooting a blank page
+
+If a page loads completely blank (no content, no visible error) on your
+live site, that's PHP hitting a fatal error with `display_errors` off,
+which is the correct production setting but hides the real message. To see
+what's actually wrong:
+
+1. **Temporarily** add this line to `config/config.local.php` (create it
+   from `config/config.local.example.php` if you haven't already):
+   ```php
+   putenv('SBT_APP_DEBUG=1');
+   ```
+   Reload the page — PHP will now print the actual error and file/line
+   instead of a blank screen. **Remove this line again once you've fixed
+   the issue** — never leave debug mode on in production, it can leak
+   internal paths and query details to visitors.
+2. If that's not possible, check your hosting control panel's PHP error
+   log (cPanel: **Metrics → Errors**, or **MultiPHP Manager** for the PHP
+   version in use) for the most recent `PHP Fatal error` entry.
+3. A common cause on shared hosting is an outdated PHP version — confirm
+   your domain is set to PHP 7.4 or newer (8.1+ recommended) as described
+   under **Requirements** above.
 
 ## Note on the logo
 

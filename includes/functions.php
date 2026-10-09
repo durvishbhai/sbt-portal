@@ -8,7 +8,7 @@ function e(?string $value): string
     return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-function redirect(string $path): never
+function redirect(string $path)
 {
     $base = rtrim(base_path(), '/');
     header('Location: ' . $base . '/' . ltrim($path, '/'));
@@ -109,7 +109,7 @@ function format_coins(float $amount): string
  * @param array<int, string> $headers
  * @param array<int, array<int, scalar|null>> $rows
  */
-function export_csv(string $filename, array $headers, array $rows): never
+function export_csv(string $filename, array $headers, array $rows)
 {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
